@@ -1,0 +1,159 @@
+{% extends '::base.html.twig' %}
+{% block main %}
+{% include '::breadCrumbs.html.twig' with {'breadCrumbs': breadCrumbs} %}
+
+<section id="main">
+	{% include 'headerImage.html.twig' with {'content':content} %}
+
+	<div class="mainBody">
+		<div class="wrapper">
+			<div class="mainContent full">
+				<h1 class="titleMain">{{content.title}}</h1>
+
+				{% if content.description is defined and content.description is not null and content.description|length %}
+					<article class="article">
+						{{ content.description|raw }}
+					</article>
+				{% endif %}
+
+				{% if distributors is defined and distributors is not null and distributors|length %}
+					<div id="map" class="mapDistributors"></div>
+						<div class="boxes boxesPartners">
+						{% for item in distributors %}
+							<div class="box">
+								<div class="content">
+									<p class="title">{{item.title}}</p>
+									{% if item.description is defined and item.description is not null and item.description|length %}
+										<div class="text">
+											{{item.description|raw}}
+										</div>
+                                    {% endif %}
+                                    <div class="more">
+                                        <a class="readMoreButtons" href="javascript:;" data-distributor="{{item.id}}">{{ 'show_on_the_map'|trans({}, "messages")}}</a>
+                                    </div>
+                                </div>
+							</div><!-- /.box -->
+						{% endfor %}
+					</div><!-- /.boxes -->
+				{% endif %}
+			</div><!-- /.mainContent -->
+		</div><!-- /.wrapper -->
+	</div><!-- /.mainBody -->
+    <div id="loading" style="display:none;">
+        <p><img src="/assets/images/ajax-loader.gif" /> Please Wait</p>
+    </div>
+</section>
+{% endblock %}
+{% block footerJS %}
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
+	    <script>
+        var $map = $('#map');
+        var locations = {{distributorsArray|raw}};
+        $(function() {
+            // google map
+            var length = {{length}};
+
+
+            if (countObjectlocations(locations)) {
+                initMap($map.selector, locations, length, false);
+            } else {
+                $map.hide();
+            }
+        });
+        $('.readMoreButtons').on('click', function(){
+            var distributorId = $(this).data('distributor');
+            var newLocations = new Object;
+            var loc = new Object;
+            loc.latitude = locations[distributorId].latitude;
+            loc.longitude = locations[distributorId].longitude;
+            loc.description = locations[distributorId].description;
+            newLocations.distributorId = loc;
+            initMap($map.selector, newLocations, 1, true);
+        });
+        // google map
+        function countObjectlocations (locations) {
+            var count = 0;
+            for (i in locations) {
+                if (locations.hasOwnProperty(i)) {
+                    count++;
+                }
+            }
+            return count > 0 ? true : false;
+        }
+
+        function initMap (mapElement, locations, length, clicked) {
+            //LOADER IF NEEDED
+            // if (clicked == true) {
+            //     $("#loading").show();
+            // }
+            // get map selector
+            var oldMapEl = mapElement;
+            mapElement = mapElement.replace('#', '');
+
+            var customStyles = [];
+            for (first in locations) {
+                var firstIndex = first;
+                break;
+            };
+            var mapOptions = {
+                zoom: 17,
+                scrollwheel: false,
+                styles: customStyles,
+                disableDefaultUI: false,
+                center: new google.maps.LatLng( locations[firstIndex].latitude, locations[firstIndex].longitude ),
+                panControl: true,
+                zoomControl: true,
+                mapTypeControl: true,
+                scaleControl: true,
+                streetViewControl: true,
+                overviewMapControl: true,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+
+            var map = new google.maps.Map(document.getElementById(mapElement), mapOptions);
+
+            var markerBounds = new google.maps.LatLngBounds();
+
+            var infowindow = new google.maps.InfoWindow();
+
+            var marker;
+            for (i in locations) {
+                // var iconUrl = "images/mapPin.png",
+                // iconSize = new google.maps.Size(55, 65);
+                var markerPosition = new google.maps.LatLng(locations[i].latitude, locations[i].longitude);
+                marker = new google.maps.Marker({
+                    position: markerPosition,
+                    map: map,
+                    animation: google.maps.Animation.DROP,
+                    // icon: {
+                    //     url: iconUrl,
+                    //     scaledSize: iconSize
+                    //     // anchor: new google.maps.Point(23, 64) // pin point position
+                    // }
+                });
+                markerBounds.extend(markerPosition);
+
+                //add infoWindow to each pin
+                google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                    return function() {
+                        infowindow.setContent('<div class="tooltip">'+locations[i].description+'</div>');
+                        infowindow.open(map, marker);
+                    }
+                })(marker, i));
+            }
+            if (length > 1) {
+                // change zoom for multiple pins
+                map.fitBounds(markerBounds);
+            };
+            if (length == 1 && clicked == true) {
+                google.maps.event.trigger(marker, 'click', {
+                  latLng: new google.maps.LatLng(locations[i].latitude, locations[i].longitude)
+                });
+                //LOADER IF NEEDED
+                // google.maps.event.addListenerOnce(map, 'idle', function(){
+                //     $("#loading").hide();
+                // });
+            }
+        }
+    </script>
+{% endblock %}

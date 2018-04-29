@@ -1,0 +1,45 @@
+{% extends '::base.html.twig' %}
+
+{% block main %}
+    {% set haveSideBar = false %}
+    {% if latestPosts is defined and latestPosts is not null and latestPosts|length %}
+        {% set haveSideBar = true %}
+    {% endif %}
+
+    {% include '::breadCrumbs.html.twig' with {'breadCrumbs': breadCrumbs, 'content': content} %}
+
+    <div id="product-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-section">
+                        <h2>{{ post.title }}</h2>
+                        <div class="orangeLine"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="single-blog" class="page-section first-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-{% if haveSideBar %}8{% else %}12{% endif %}"> 
+                            {% if post.translations[app.request.locale].image is defined and post.translations[app.request.locale].image is not null and post.translations[app.request.locale].image|length %}
+                                <div class="image">
+                                    <div class="image-post">
+                                        {% thumbnail post.translations[app.request.locale].image, 'index' %}
+                                    </div>
+                                </div>
+                             {% endif %} 
+                            <div class="product-content">
+                                {% if post.description is defined and post.description is not null and post.description|length %}
+                                    {{ post.description|raw }}    
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        {% include 'NTNewsBundle:Frontend:latestPosts.html.twig' with {'posts': latestPosts} %}     
+                    </div>
+                </div>
+            </div>     
+        </div>
+    </div>  
+{% endblock %}

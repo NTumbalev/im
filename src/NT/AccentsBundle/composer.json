@@ -1,0 +1,27 @@
+{
+    "name": "nt/accents-bundle",
+    "description": "This Symfony bundle provide easy way to create Accents",
+    "keywords": ["Symfony", "Accents", "Bundle"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hristo Hristoff",
+            "email": "hristo.hristov@nt.bg"
+        }
+    ],
+    "require": {
+        "nt/core-bundle": "dev-master",
+        "nt/publish-workflow-bundle": "dev-master"
+    },
+    "repositories":[
+        {
+            "type": "vcs",
+            "url": "git@dev.ntgroup.com:symfony-bundles/nt-core-bundle.git"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "NT\\AccentsBundle": "" }
+    },
+    "target-dir": "NT/AccentsBundle"
+}

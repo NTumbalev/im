@@ -1,0 +1,22 @@
+{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+{% block javascripts %}
+	{{parent()}}
+	<script src="{{ asset('bundles/ntnews/js/jquery-ui.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('bundles/ntnews/js/jquery-ui-timepicker-addon.js') }}" type="text/javascript"></script>
+	<script type="text/javascript">
+	$(function() {
+		$( ".datepicker" ).datetimepicker({ 
+			    dateFormat: 'yy-mm-dd', 
+			    timeFormat: 'HH:mm:ss' 
+			},
+			$.datepicker.regional[ "en" ]
+		);
+
+		});
+	</script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/ntnews/css/jquery-ui.css') }}" type="text/css" media="screen" />
+{% endblock %}

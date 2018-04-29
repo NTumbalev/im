@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block main %}
+    {% if 'NTSliderBundle'| bundle_exists %}
+        {{ render(controller("NTSliderBundle:SliderFrontend:homepageSlider")) }}
+    {% endif %}
+    
+    {{ render(controller("NTAccentsBundle:AccentsFrontend:homepageAccents")) }}
+    
+    {{ render(controller("NTNewsBundle:NewsFrontend:homepagePosts")) }}
+{% endblock %}

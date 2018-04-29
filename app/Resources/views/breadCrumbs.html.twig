@@ -1,0 +1,23 @@
+<div id="heading">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="heading-content">
+                    <h2>{{ content.title }}</h2>
+                    <div class="breadcrumbs">
+                        <a href="{{path('homepage')}}">
+                            {{ 'homepage'|trans({}, "NTFrontendBundle")}}
+                        </a> /
+                        {% for key, item in breadCrumbs %}
+                            {% if not loop.last %}
+                                <a href="{{item}}">{{key}}</a> /
+                            {% else %}
+                                <a href="javascript:;">{{key}}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

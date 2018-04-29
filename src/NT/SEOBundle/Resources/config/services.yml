@@ -1,0 +1,25 @@
+parameters:
+    nt_seo.form.type.meta_data.class: NT\SEOBundle\Form\Type\MetaDataType
+    nt_seo.form.type.meta_data_value.class: NT\SEOBundle\Form\Type\MetaDataValueType
+    nt_seo.event.listener.seo.class: NT\SEOBundle\EventListener\SeoListener
+
+
+services:
+    nt_seo.event.listener.seo:
+        class: %nt_seo.event.listener.seo.class%
+        tags:
+            - { name: kernel.event_listener, event: nt.seo, method: onLoadSeo }
+        arguments:
+            - @sonata.seo.page
+            - @request_stack
+            - @translator
+
+    nt_seo.form.type.meta_data:
+        class: %nt_seo.form.type.meta_data.class%
+        tags:
+            - { name: form.type, alias: meta_data }
+
+    nt_seo.form.type.meta_data_value:
+        class: %nt_seo.form.type.meta_data_value.class%
+        tags:
+            - { name: form.type, alias: meta_data_value }

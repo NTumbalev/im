@@ -1,0 +1,13 @@
+parameters:
+    nt_menu.admin.menu.admin.class: NT\MenuBundle\Admin\MenuAdmin
+    nt_menu.admin.menu.controller.class: NTCoreBundle:TreeCRUD
+    nt_menu.admin.menu.translation.domain: NTMenuBundle
+
+services:
+    nt_menu.admin.menu:
+        class: %nt_menu.admin.menu.admin.class%
+        arguments: [~, NT\MenuBundle\Entity\Menu, %nt_menu.admin.menu.controller.class%]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: nt_settings, label: nt_menu }
+        calls:
+            - [ setTranslationDomain, [%nt_menu.admin.menu.translation.domain%]]

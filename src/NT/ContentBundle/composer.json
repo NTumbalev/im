@@ -1,0 +1,32 @@
+{
+    "name": "nt/content-bundle",
+    "description": "This Symfony bundle provide easy way to create Content pages",
+    "keywords": ["Symfony", "Content", "Bundle"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hristo Hristoff",
+            "email": "hristo.hristov@nt.bg"
+        }
+    ],
+    "require": {
+        "nt/core-bundle": "dev-master",
+        "nt/seo-bundle": "dev-master",
+        "nt/publish-workflow-bundle": "dev-master"
+    },
+    "repositories":[
+        {
+            "type": "vcs",
+            "url": "git@dev.ntgroup.com:symfony-bundles/nt-core-bundle.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@dev.ntgroup.com:symfony-bundles/nt-seo-bundle.git"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "NT\\ContentBundle": "" }
+    },
+    "target-dir": "NT/ContentBundle"
+}

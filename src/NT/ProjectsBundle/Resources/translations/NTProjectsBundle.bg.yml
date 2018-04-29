@@ -1,0 +1,26 @@
+Аccent List: 'Проекти'
+Аccent Delete: 'Изтрий'
+
+nt_projects: 'Проекти'
+menu.item: 'Основни'
+form:
+  created_at: 'Дата на създаване'
+  description: 'Описание'
+  id: 'Уникален номер'
+  image: 'Изображение'
+  is_hidden: 'Скрит'
+  general: 'Основни'
+  label_image: 'Изображение'
+  more: 'Допълнителни'
+  title: 'Заглавие'
+  translations: 'Преводи'
+  isActive: 'Активен'
+  gallery: 'Галерия'
+
+tab:
+  general: 'Основни'
+  more: 'Допълнителни'
+
+table.label_actions: 'Действия'
+
+Publish Workflow: 'Видимост в сайта'

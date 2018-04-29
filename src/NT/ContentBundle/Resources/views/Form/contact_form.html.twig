@@ -1,0 +1,76 @@
+{% block form_row %}
+    {% spaceless %}
+        {% if name == 'captcha' %}
+            {{ form_widget(form) }}
+        {% elseif name == 'family' %}
+            <div class="form-group">
+                {{ form_label(form) }}
+                <div class="col-md-7 inputGroupContainer">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-user"></i>
+                        </span>
+                        {{ form_widget(form, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+            {#
+            <div class="formRow">
+                {{ form_label(form) }}
+                <div class="field{% if errors|length %} fieldError{% endif %}">
+                </div><!-- /.field -->
+            </div><!-- /.formRow -->
+            #}
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_row %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            {% for error in errors %}
+                {# ERROR HTML #}
+                <span class="uploadInfoText">{{ error.message|trans({}, "messages")}}</span>
+            {% endfor %}
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block button_widget -%}
+    <button type="submit" id="contactFormSubmitBtn" class="btn btn-primary btn-lg btn-block">
+        {{ 'contact.submit'|trans({}, "messages")}}
+    </button>
+{%- endblock button_widget %}
+
+{#
+{% block submit_widget -%}
+    {% set type = type|default('submit') %}
+    {{- block('button_widget') -}}
+{%- endblock submit_widget %}
+#}
+
+{%- block form_label -%}
+    {% if label is not sameas(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif %}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif %}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                    '%name%': name,
+                    '%id%': id,
+                }) %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}{% if required %}<span class="star">*</span>{% endif %}</label>
+    {%- endif -%}
+{%- endblock form_label -%}

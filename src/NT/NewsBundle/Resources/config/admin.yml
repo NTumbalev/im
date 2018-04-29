@@ -1,0 +1,41 @@
+parameters:
+    nt.news.admin.news.class: NT\NewsBundle\Admin\NewsAdmin
+    nt.news.admin.news.controller: NTCoreBundle:TreeCRUD
+    nt.news.admin.news.translation: NTNewsBundle
+
+services:
+    nt.news.admin.news:
+        class: %nt.news.admin.news.class%
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "nt_site", label: "nt_news", audit: true }
+        arguments:
+            - ~
+            - %nt.news.admin.news.entity%
+            - %nt.news.admin.news.controller%
+        calls:
+            - [ setTranslationDomain, [%nt.news.admin.news.translation%]]
+            - [ setTemplates, [outer_list_rows_mosaic: NTCoreBundle:Admin:list_outer_rows_mosaic.html.twig]]
+
+    nt.news.admin.news_translation:
+        class: NT\NewsBundle\Admin\NewsTranslationsAdmin
+        arguments: [~, NT\NewsBundle\Entity\NewsTranslation, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, show_in_dashboard: false}
+        calls:
+            - [ setTranslationDomain, [%nt.news.admin.news.translation%]]
+
+    nt.news_categories.admin.news_categories:
+        class: NT\NewsBundle\Admin\NewsCategoriesAdmin
+        arguments: [~, NT\NewsBundle\Entity\NewsCategory, NTCoreBundle:SortableCRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: "nt_site", label: "nt_news_categories"}
+        calls:
+            - [ setTranslationDomain, [%nt.news.admin.news.translation%]]
+
+    nt.news_categories.admin.news_categories_translation:
+        class: NT\NewsBundle\Admin\NewsCategoriesTranslationsAdmin
+        arguments: [~, NT\NewsBundle\Entity\NewsCategoryTranslation, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, show_in_dashboard: false}
+        calls:
+            - [ setTranslationDomain, [%nt.news.admin.news.translation%]]

@@ -1,0 +1,24 @@
+parameters:
+    nt.projects.admin.projects.class: NT\ProjectsBundle\Admin\ProjectsAdmin
+    nt.projects.admin.projects.controller: NTCoreBundle:SortableCRUD
+    nt.projects.admin.projects.translation: NTProjectsBundle
+
+
+services:
+    nt.projects.admin.projects:
+        class: %nt.projects.admin.projects.class%
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "nt_site", label: "nt_projects" }
+        arguments:
+            - ~
+            - NT\ProjectsBundle\Entity\Project
+            - %nt.projects.admin.projects.controller%
+        calls:
+            - [ setTranslationDomain, [%nt.projects.admin.projects.translation%]]
+            - [ setTemplates, [outer_list_rows_mosaic: NTCoreBundle:Admin:list_outer_rows_mosaic.html.twig]]
+
+    # nt.projects.admin.projects_translation:
+    #     class: NT\ProjectsBundle\Admin\ProjectTranslationsAdmin
+    #     arguments: [~, NT\ProjectsBundle\Entity\ProjectTranslation, ~]
+    #     tags:
+    #         - {name: sonata.admin, manager_type: orm, show_in_dashboard: false}

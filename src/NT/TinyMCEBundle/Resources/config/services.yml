@@ -1,0 +1,7 @@
+services:
+  twig.extension.nt_tinymce:
+    class: NT\TinyMCEBundle\Twig\Extension\NTTinyMCEExtension
+    calls:
+      - [ setContainer,[ @service_container ] ]
+    tags:
+      - { name: twig.extension }

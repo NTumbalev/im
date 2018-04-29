@@ -1,0 +1,38 @@
+{% if slides is defined and slides is not null and slides|length %}
+    <div class="container">
+        <div class="row longOrangeLine">
+            <div class="col-lg-12 no-padding">
+                <div id="slider">
+                    <div class="flexslider">
+                      <ul class="slides">
+                        {% for slide in slides %}
+                            <li>
+                                <div class="slider-caption">
+                                    {% if slide.title is defined and slide.title is not null and slide.title|length %}
+                                        <h1>{{ slide.title }}</h1>
+                                    {% endif %}
+
+                                    {% if slide.description is defined and slide.description is not null and slide.description|length %}
+                                        {{ slide.description|raw }}    
+                                    {% endif %}
+
+                                    {% if slide.url is not null and slide.url|length %}
+                                        <a href="{{ slide.url }}" target="{{ slide.target }}">
+                                            {% if slide.buttonTitle is defined and slide.buttonTitle is not null and slide.buttonTitle|length %}
+                                                {{ slide.buttonTitle }}
+                                            {% else %}
+                                                {{ 'learn_more'|trans({}, 'NTFrontendBundle')}}
+                                            {% endif %}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                              <img src="{% path slide.translations[app.request.locale].image, 'reference' %}" alt="" />
+                            </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

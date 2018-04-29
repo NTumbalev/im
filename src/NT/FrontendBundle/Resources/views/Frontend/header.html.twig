@@ -1,0 +1,103 @@
+<header>
+    <div id="main-header">
+        <div class="container">
+            <div class="row hideOnMobile headerBackground">
+                <div class="col-md-12">
+                    <div class="lang round-border-bottom pull-right">
+                        <a class="activeLang" href="javascript:;">
+                            <span class="langFlag">
+                                <img src="/images/{{app.request.locale}}.png" alt="{{app.request.locale|upper}}">
+                            </span>
+                            {{ app.request.locale|trans({}, 'NTFrontendBundle')}}
+                            <span class="activeLangSpan"></span>
+                        </a>
+
+                        <ul class="subLangs">
+                            {% for locale in locales %}
+                                <li{% if locale == app.request.locale %} class="selectedLang" {% endif %}>
+                                    {% if locale == 'de' %}
+                                        <a href="http://harderlogistics.com/" target="__blank">
+                                            <span class="langFlag">
+                                                <img src="/images/{{locale}}.png" alt="{{ locale|upper }}">
+                                            </span>
+                                            {{ locale|trans({}, 'NTFrontendBundle')}}    
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ urls[locale] }}">
+                                            <span class="langFlag">
+                                                <img src="/images/{{locale}}.png" alt="{{ locale|upper }}">
+                                            </span>
+                                            {{ locale|trans({}, 'NTFrontendBundle')}}
+                                        </a>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row hideOnDesktop">
+                <div class="col-xs-5">
+                    <a class="logo-mobile pull-left" href="{{ path('homepage') }}">
+                        <img src="/images/logo.png">
+                    </a>
+                </div>
+                <div class="col-xs-7">
+                    <nav class="navbar navbar-default navbar-fixed-top hideOnDesktop" role="navigation">
+                        <div class="container">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <div class="navbar-header">
+                                <div class="lang lang-mobile round-border-bottom pull-left">
+                                    <p class="activeLang">
+                                        <span class="langFlag">
+                                            <img src="/images/{{app.request.locale}}.png" alt="{{app.request.locale|upper}}">
+                                        </span>
+                                        <span class="activeLangSpan"></span>
+                                    </p>
+
+                                    <ul class="subLangs">
+                                        {% for locale in locales %}
+                                            <li{% if locale == app.request.locale %} class="selectedLang" {% endif %}>
+                                                <a href="{{ urls[locale] }}">
+                                                    <span class="langFlag">
+                                                        <img src="/images/{{locale}}.png" alt="{{ locale|upper }}">
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+                            <!-- Collect the nav links, forms, and other content for toggling -->
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                {% set menu = knp_menu_get('NTFrontendBundle:Builder:mainMenu', [], {'class': 'top-menu'}) %}
+                                {{ knp_menu_render(menu) }}
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            <div class="row hideOnMobile headerBackground">
+                <div class="col-md-4">
+                    <div class="logo">
+                        <a href="{{ path('homepage') }}">
+                            <img src="/images/logo_new.png" title="IndustrialMoving" alt="IndustrialMoving" >
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="main-menu">
+                        {{ knp_menu_render('NTFrontendBundle:Builder:mainMenu') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

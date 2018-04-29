@@ -1,0 +1,31 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+
+{% extends 'SonataAdminBundle:CRUD:base_list_field.html.twig' %}
+
+{% block field %}
+    <div class="col-sm-6 centered">
+        <center>
+            {% if object.translations[app.request.locale].image and admin.isGranted('EDIT', object) and admin.hasRoute('edit') %}
+                <a href="{{ admin.generateUrl('edit', {'id' : object|sonata_urlsafeid }) }}" style="float: left; margin-right: 6px;">
+                    {% thumbnail object.translations[app.request.locale].image, 'admin' with {'width': 90} %}
+                </a>
+                {% if admin.isGranted('EDIT', object) and admin.hasRoute('edit') %}
+                    <a href="{{ admin.generateUrl('edit', {'id' : object|sonata_urlsafeid }) }}"><strong>{{ object.title }}</strong></a>
+                {% else %}
+                    <strong>{{ object.title }}</strong>
+                {% endif %}
+            {% else %}
+                <i class="fa fa-chain-broken fa-3x"></i>
+            {% endif %}
+        </center>
+    </div>
+{% endblock %}

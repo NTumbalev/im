@@ -1,0 +1,63 @@
+{% extends '::base.html.twig' %}
+
+{% import '::renderSocials.html.twig' as renderSocials %}
+
+{% block main %}
+    {% include '::breadCrumbs.html.twig' with {'breadCrumbs':breadCrumbs} %}
+
+    <section id="main">
+        <div class="mainBody">
+            <div class="wrapper">
+                {% set haveSideBar = false %}
+                {% if sideBar is defined and sideBar is not null and sideBar|length %}
+                    {% set haveSideBar = true %}
+                {% endif %}
+                <div class="mainContent{% if haveSideBar == false %} full{% endif %}">
+                    <h1 class="titleMain">{{ post.title }}</h1>
+
+                    <p class="date"><i class="iconDate"></i>{{ post.publishedDate|date('d.m.Y') }}</p>
+
+                    {% if post.description is defined and post.description is not null and post.description|length %}
+                        <article class="article">
+                            {{ post.description|graw }}
+                        </article>
+                    {% endif %}
+
+                    {% if post.showSocialIcons is defined and post.showSocialIcons is not null and post.showSocialIcons|length %}
+                        <div class="shareBar">
+                            <p>{{ 'share'|trans({}, 'messages')}}</p>
+
+                            <div class="socials socialsShare">
+                                {{ render.renderSocialIcons(post) }}
+                            </div><!-- /.socials -->
+                        </div><!-- /.shareBar -->
+                    {% endif %}
+
+                    {% if latestPosts is defined and latestPosts is not null and latestPosts|length %}
+                        <div class="module moduleRelated">
+                            <div class="moduleHead">
+                                <p class="title">{{ 'inner_latest_news'|trans({}, 'messages')}}</p>
+
+                                <div class="more">
+                                    <a href="{{ path('posts_list') }}">{{ 'inner_news_see_all'|trans({}, 'messages')}}</a>
+                                </div>
+                            </div><!-- /.moduleHead -->
+
+                            {% include 'NTNewsBundle:Frontend:latestPosts.html.twig' with {'posts':latestPosts} %}
+                        </div><!-- /.module -->
+                    {% endif %}
+                </div><!-- /.mainContent -->
+
+                {% if haveSideBar %}
+                    <aside class="sidebar">
+                        <p class="titleAside">{{ content.title }}</p>
+
+                        <nav class="navAside">
+                            {{ sideBar|raw }}
+                        </nav><!-- /.navAside -->
+                    </aside><!-- /.sidebar -->
+                {% endif %}
+            </div><!-- /.wrapper -->
+        </div><!-- /.mainBody -->
+    </section>
+{% endblock %}

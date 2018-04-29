@@ -1,0 +1,46 @@
+{% extends '::base.html.twig' %}
+
+{% import "::paginatorWithRouteAndSlug.html.twig" as pager %}
+
+{% block main %}
+
+    {% include '::breadCrumbs.html.twig' with {'breadCrumbs':breadCrumbs} %}    
+
+    <div id="latest-blog">
+        <div class="container">
+            <div class="row">
+                <p></p>
+                {% for post in posts %}
+                    <div class="col-md-4 col-sm-6">
+                        <div class="blog-post">
+                            {% if post.translations[app.request.locale].image is defined and post.translations[app.request.locale].image is not null and post.translations[app.request.locale].image|length %}
+                                <div class="blog-thumb">
+                                    {% thumbnail post.translations[app.request.locale].image, 'index' %}
+                                </div>
+                            {% endif %}
+                            <div class="blog-content">
+                                <div class="content-show">
+                                    <h4>
+                                        <a href="{{ path('post_without_category', post.routeParams) }}">
+                                            {{ post.title }}
+                                        </a>
+                                    </h4>
+                                    <span>{{post.publishedDate|localizeddate('full', 'none', null, null, 'dd MMM YYYY')}}</span>
+                                </div>
+                                {% if post.simpleDescription is defined and post.simpleDescription is not null and post.simpleDescription|length %}
+                                    <div class="content-hide">
+                                        <p>{{ post.simpleDescription }}</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {# {% if posts is defined and posts|length %}
+        {{ pager.pager(posts, "posts_list") }}
+    {% endif %} #}
+{% endblock %}

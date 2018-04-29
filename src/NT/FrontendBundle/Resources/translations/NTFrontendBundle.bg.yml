@@ -1,0 +1,41 @@
+bg: 'Български'
+en: 'English'
+de: 'Deutch'
+
+seoTitleText: ' | Industrial Moving'
+site_name: 'Industrial Moving Site'
+all_rights_reserved: 'Всички права запазени © 2017'
+website_name: 'IndustrialMoving'
+
+homepage: 'Начало'
+learn_more: 'Научете повече'
+read_more: 'Прочети повече'
+follow_us: 'Следвайте ни'
+news_homepage: 'Новини'
+services: 'Услуги'
+
+latest_news: 'Последни новини'
+map_title: 'Карта'
+
+contact:
+    title: 'Изпратете съобщение'
+    subject: 'Съобщение от формата за контакти'
+    topic: 'Заглавие'
+    name: 'Име'
+    email: 'E-mail'
+    message: 'Съобщение'
+    submit: 'Изпрати'
+    error: 'Възникна грешка! Формата не е изпратена.'
+    success: 'Вашето запитване е изпратено успешно!'
+    user_message_subject: 'Вашето съобщение е изпратено до администратор'
+
+message_generated_from: 'Това съобщение е генерирано от'
+developed_by: 'разработен от'
+
+send_enquiry: 'Изпрати запитване'
+
+fill_captcha: 'Моля попълнете кепчата'
+
+
+order_success: 'Последователността е запазена'
+email_placeholder: 'yourmail@mail.com'

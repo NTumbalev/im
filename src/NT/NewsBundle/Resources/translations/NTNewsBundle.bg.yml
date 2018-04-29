@@ -1,0 +1,44 @@
+nt_news: 'Новини'
+nt_news_categories: 'Категории новини'
+
+News List: 'Новини'
+News Delete: 'Изтрий'
+
+Publish Workflow: 'Видимост в сайта'
+td_revision: 'Ревизия'
+td_timestamp: Дата
+td_username: Администратор
+td_action: Действия
+label_view_revision: 'Виж ревизията'
+action_edit: Виж
+action_history: Версии
+label_revert_to_revision: 'Върни се до тази ревизия'
+not_found_revisions: 'Няма намерени ревизии'
+General: Общи
+actions: Действия
+list:
+    title: Заглавие
+    path: Подреждане
+    is_hidden: Скрит
+    createdAt: 'Дата на създаване'
+    actions: Действия
+form:
+    slug: Слъг
+    translations: Преводи
+    title: Заглавие
+    simpleDescription: 'Кратко описание'
+    description: Описание
+    meta_title: 'Мета заглавие'
+    meta_description: 'Мета описание'
+    meta_keywords: 'Мета ключови думи'
+    published_date: 'Дата на новината'
+    image: Снимка
+    gallery: Галерия
+    is_hidden: Скрит
+    general: Основни
+    createdAt: 'Създанен на'
+    isHomepage: 'На начална страница'
+    isTop: 'Топ новина'
+    showSocialIcons: 'Покажи социалните икони'
+    isActive: 'Активен?'
+    newsCategories: 'Категории новини'

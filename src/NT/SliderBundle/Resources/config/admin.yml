@@ -1,0 +1,26 @@
+parameters:
+    nt.slider.admin.slider.class: NT\SliderBundle\Admin\SliderAdmin
+    nt.slider.admin.slider.controller: NTCoreBundle:SortableCRUD
+    nt.slider.admin.slider.translation: NTSliderBundle
+
+
+services:
+    nt.slider.admin.slider:
+        class: %nt.slider.admin.slider.class%
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "nt_site", label: "nt_slider", audit: true }
+        arguments:
+            - ~
+            - %nt.slider.admin.slider.entity%
+            - %nt.slider.admin.slider.controller%
+        calls:
+            - [ setTranslationDomain, [%nt.slider.admin.slider.translation%]]
+            - [ setTemplates, [outer_list_rows_mosaic: NTSliderBundle:Admin:list_outer_rows_mosaic.html.twig]]
+
+    nt.slider.admin.slider_translations:
+        class: NT\SliderBundle\Admin\SliderTranslationsAdmin
+        arguments: [~, NT\SliderBundle\Entity\SliderTranslation, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, show_in_dashboard: false}
+        calls:
+            - [ setTranslationDomain, [%nt.slider.admin.slider.translation%]]

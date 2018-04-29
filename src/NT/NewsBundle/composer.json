@@ -1,0 +1,34 @@
+{
+    "name": "nt-cms/news-bundle",
+    "description": "This Symfony bundle provide easy way to create news pages",
+    "keywords": ["Symfony", "news", "Bundle"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hristo Hristoff",
+            "email": "hristo.hristov@nt.bg"
+        }
+    ],
+    "require": {
+        "nt/core-bundle": "dev-master",
+        "nt/seo-bundle": "dev-master",
+        "nt/publish-workflow-bundle": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "config": {
+        "vendor-dir": "src"
+    },
+    "repositories":[
+        {
+            "type": "vcs",
+            "url": "git@dev.ntgroup.com:nt-cms/news-bundle.git"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "NT\\NewsBundle": "" }
+    },
+    "target-dir": "NT/NewsBundle"
+}

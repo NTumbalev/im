@@ -1,0 +1,20 @@
+{
+    "name": "nt/seo-bundle",
+    "description": "This Symfony bundle provide easy way to add seo meta data to other objects",
+    "keywords": ["Symfony", "seo", "Bundle"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hristo Hristoff",
+            "email": "hristo.hristov@nt.bg"
+        }
+    ],
+    "require": {
+        "nt/core-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "NT\\SEOBundle": "" }
+    },
+    "target-dir": "NT/SEOBundle"
+}

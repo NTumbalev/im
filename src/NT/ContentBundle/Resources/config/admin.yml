@@ -1,0 +1,29 @@
+parameters:
+    nt.content.admin.content.class: NT\ContentBundle\Admin\ContentAdmin
+    nt.content.admin.content.controller: NTContentBundle:ContentCRUD
+    nt.content.admin.content.translation: NTContentBundle
+
+services:
+    nt.content.admin.content:
+        class: %nt.content.admin.content.class%
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "nt_site", label: "nt_content" }
+        arguments:
+            - ~
+            - %nt.content.admin.content.entity%
+            - %nt.content.admin.content.controller%
+        calls:
+            - [ setTranslationDomain, [%nt.content.admin.content.translation%]]
+
+    nt.contacts.form.type:
+        class: NT\ContentBundle\Form\Type\ContactsType
+        tags:
+            - { name: form.type, alias: contacts }
+
+    nt.content.admin.content_translations:
+        class: NT\ContentBundle\Admin\ContentTranslationsAdmin
+        arguments: [~, NT\ContentBundle\Entity\ContentTranslation, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, show_in_dashboard: false}
+        calls:
+            - [ setTranslationDomain, [%nt.content.admin.content.translation%]]

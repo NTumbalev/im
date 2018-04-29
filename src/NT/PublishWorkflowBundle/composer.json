@@ -1,0 +1,20 @@
+{
+    "name": "nt/publish-workflow-bundle",
+    "description": "This Symfony bundle provide easy way to create news pages",
+    "keywords": ["Symfony", "news", "Bundle"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hristo Hristoff",
+            "email": "hristo.hristov@nt.bg"
+        }
+    ],
+    "require": {
+        "nt/core-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "NT\\PublishWorkflowBundle": "" }
+    },
+    "target-dir": "NT/PublishWorkflowBundle"
+}

@@ -1,0 +1,23 @@
+Dashboard: 'Начало'
+link_actions: 'Действия'
+link_filters: 'Филтри'
+nt_site: 'Сайт'
+nt_settings: 'Настройки'
+nt_translations: 'Преводи'
+nt_media: 'Медия'
+nt_users: 'Потребители'
+nt_menu: 'Меню'
+nt_news: 'Новини'
+nt_projects: 'Проекти'
+
+send_request: 'Изпрати запитване за системата'
+translations.cache_removed: 'Кешът е изтрит'
+btn_advanced_filters: 'Допълнителен филтър'
+
+label:
+    site: 'Сайт'
+    projects: 'Проекти'
+    news: 'Новини'
+    settings: 'Настройки'
+    media: 'Медия'
+    administration: 'Администрация'

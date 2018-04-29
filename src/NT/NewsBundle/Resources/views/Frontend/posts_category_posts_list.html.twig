@@ -1,0 +1,156 @@
+{% extends '::base.html.twig' %}
+
+{% import "::paginatorWithRouteAndSlug.html.twig" as pager %}
+
+{% block main %}
+{% include '::headerImage.html.twig' with {'content':content} %}
+
+{% set haveSideBar = false %}
+{% if sideBar is defined and sideBar is not null and sideBar | length %}
+    {% set haveSideBar = true %}
+{% endif %}
+
+<div class="main" role="main">
+    <div id="content" class="content full">
+        <div class="container">
+            <div class="row">
+                <div class="{% if haveSideBar == true %}col-md-9{% else %}col-md-12{% endif %} posts-archive">
+                    {% for item in categoryPosts %}
+                        <article class="post">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <a href="{{ path('post_without_category', item.routeParams()) }}">
+                                        {% if item.translations[app.request.locale].image is defined and item.translations[app.request.locale].image is not null and item.translations[app.request.locale].image | length %}
+                                            {% thumbnail item.translations[app.request.locale].image,
+                                            'index' with {
+                                                'title': item.translations[app.request.locale].title,
+                                                'alt': item.translations[app.request.locale].title,
+                                                'class': 'img-thumbnail'
+                                            } %}
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="col-md-8 col-sm-8">
+                                    <h3>
+                                        <a href="{{ path('post_without_category', item.routeParams()) }}">
+                                            {{ item.title }}
+                                        </a>
+                                    </h3>
+                                    <span class="post-meta meta-data">
+                                        <span>
+                                            <i class="fa fa-calendar"></i>
+                                            {{ item.publishedDate|date('d.m.Y') }}
+                                        </span>
+                                    </span>
+                                    {% if item.simpleDescription is defined and item.simpleDescription is not null and item.simpleDescription | length %}
+                                        <p>{{item.simpleDescription}}</p>
+                                    {% endif %}
+                                    <p>
+                                        <a href="{{ path('post_without_category', item.routeParams()) }}" class="btn btn-primary">
+                                            {{ 'read_more'|trans({}, 'messages')}}
+                                            <i class="fa fa-long-arrow-right"></i>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+
+                    {% if posts is defined and posts | length %}
+                        {{ pager.pager(posts, "posts_list") }}
+                    {% endif %}
+                </div>
+
+                {% if haveSideBar %}
+                    <div class="col-md-3 sidebar">
+                        <div class="widget sidebar-widget">
+                            <div class="sidebar-widget-title">
+                                <h3 class="widgettitle">
+                                    {{ 'post_categories'|trans({}, 'messages')}}
+                                </h3>
+                            </div>
+                            {{ sideBar|raw }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+    {#
+    {% include '::breadCrumbs.html.twig' with {'breadCrumbs':breadCrumbs} %}
+
+    <section id="main">
+        {% if postCategory.translations[app.request.locale].image is defined and postCategory.translations[app.request.locale].image is not null and postCategory.translations[app.request.locale].image|length %}
+            <div class="mainHead">
+                <div class="wrapper">
+                    <div class="bannerMain" style="background-image: url({% path postCategory.translations[app.request.locale].image, 'reference' %});"></div>
+                </div><!-- /.wrapper -->
+            </div><!-- /.mainHead -->
+        {% endif %}
+
+        <div class="mainBody">
+            <div class="wrapper">
+                {% set haveSideBar = false %}
+                {% if sideBar is defined and sideBar is not null and sideBar|length %}
+                    {% set haveSideBar = true %}
+                {% endif %}
+                <div class="mainContent{% if haveSideBar == false %} full{% endif %}">
+                    <h1 class="titleMain">{{ postCategory.title }}</h1>
+
+                    {% if postCategory.description is defined and postCategory.description is not null and postCategory.description|length %}
+                        <article class="article">
+                            {{ postCategory.description|raw }}
+                        </article>
+                    {% endif %}
+
+                    <div class="boxes boxesNews">
+                        {% for item in categoryPosts %}
+                            <div class="box boxWide">
+                                <a href="{{ path(item.route, item.routeParams({'categorySlug':postCategory.slug})) }}" class="photo" style="background-image: url({% if item.translations[app.request.locale].image is defined and item.translations[app.request.locale].image is not null and item.translations[app.request.locale].image|length %}
+                                    {% path item.translations[app.request.locale].image, 'index' %}{% else %}'/assets/images/no-img.jpg'{% endif %});"></a>
+
+                                <div class="content">
+                                    <p class="date"><i class="iconDate"></i>{{ item.publishedDate|date('d.m.Y') }}</p>
+
+                                    <p class="title">
+                                        <a href="{{ path(item.route, item.routeParams({'categorySlug':postCategory.slug})) }}">
+                                            {{ item.title }}
+                                        </a>
+                                    </p>
+
+                                    {% if item.simpleDescription is defined and item.simpleDescription is not null and item.simpleDescription|length %}
+                                        <div class="text">
+                                            {{ item.simpleDescription|raw }}
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="more">
+                                        <a href="{{ path(item.route, item.routeParams({'categorySlug':postCategory.slug})) }}">
+                                            {{ 'read_more'|trans({}, 'messages')}}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div><!-- /.box -->
+                        {% endfor %}
+                    </div><!-- /.boxes -->
+
+                    {% if categoryPosts is defined and categoryPosts|length %}
+                        {{ pager.pager(categoryPosts, postCategory.route, postCategory.slug, 'categorySlug') }}
+                    {% endif %}
+                </div><!-- /.mainContent -->
+
+                {% if haveSideBar %}
+                    <aside class="sidebar">
+                        <p class="titleAside">{{ content.title }}</p>
+
+                        <nav class="navAside">
+                            {{ sideBar|raw }}
+                        </nav><!-- /.navAside -->
+                    </aside><!-- /.sidebar -->
+                {% endif %}
+            </div><!-- /.wrapper -->
+        </div><!-- /.mainBody -->
+    </section>
+    #}
+{% endblock %}

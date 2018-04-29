@@ -1,0 +1,245 @@
+{% extends '::base.html.twig' %}
+
+{% block main %}
+    {% include '::breadCrumbs.html.twig' with {'breadCrumbs':breadCrumbs, 'content': content} %}
+    
+    <div id="product-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-section">
+                        <h2>{{ 'contact.title'|trans({}, 'NTFrontendBundle')}}</h2>
+                        <div class="orangeLine"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="contact-us">
+                <div class="container">
+                    <div class="row">
+                        <div class="product-item col-md-12">
+                            <div class="row">
+                                <div class="col-md-8">  
+                                    <div class="message-form">
+                                        {% form_theme form with 'NTContentBundle:Form:contact_form.html.twig' %}
+                                        {{ 
+                                            form_start(
+                                                form, 
+                                                { 
+                                                    'attr': {
+                                                        'novalidate': 'novalidate',
+                                                        'class': 'send-message',
+                                                        'id': 'contact_form'
+                                                    }
+                                                }
+                                            ) 
+                                        }}
+
+                                        {% if app.session.flashbag.get('success') %}
+                                            <div class="alert alert-success fade in">
+                                                <a class="close" data-dismiss="alert" href="#">×</a>
+                                                {{'contact.success'|trans({}, 'NTFrontendBundle')}}
+                                            </div>
+                                        {% endif %}
+
+                                        {% if app.session.flashbag.get('error') %}
+                                            <div class="alert alert-danger fade in"> 
+                                                <a class="close" data-dismiss="alert" href="#">×</a>
+                                                {{ 'contact.error'|trans({}, "NTFrontendBundle")}}
+                                            </div>
+                                        {% endif %}
+
+                                            <div class="row">
+                                                <div class="name col-md-4{% if form.name.vars.errors|length %} has-error{% endif %}">
+                                                    {{form_widget(form.name) }}
+                                                </div>
+
+                                                <div class="email col-md-4{% if form.email.vars.errors|length %} has-error{% endif %}">
+                                                    {{form_widget(form.email) }}
+                                                </div>
+                                                
+                                                <div class="subject col-md-4{% if form.subject.vars.errors|length %} has-error{% endif %}">
+                                                    {{form_widget(form.subject) }}
+                                                </div>
+                                            </div>
+                                            <div class="row">        
+                                                <div class="text col-md-12{% if form.message.vars.errors|length %} has-error{% endif %}">
+                                                    {{form_widget(form.message) }}
+                                                </div>   
+                                            </div>                              
+                                            <div class="send">
+                                                <button type="submit">
+                                                    {{ 'contact.submit'|trans({}, 'NTFrontendBundle')}}
+                                                </button>
+                                            </div>
+                                        {{ form_end(form) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="info">
+                                        {% if content.description is defined and content.description is not null and content.description|length %}
+                                            {{ content.description|raw }}
+                                        {% endif %}
+                                    </div>
+                                </div>     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-section">
+                        <h2>{{ 'map_title'|trans({}, 'NTFrontendBundle')}}</h2>
+                        <div class="orangeLine"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {% if dealers is defined and dealers is not null and dealers|length %}
+                        <div id="googleMap" style="height:340px;"></div>
+                    {% endif %}
+                    {# <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2958.4856953525496!2d24.740727457766322!3d42.13989230112095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14acd1b693efa1f5%3A0x502e4f9b608f521!2sbul.+%22Ruski+123%2C+4000+Tsentar%2C+Plovdiv!5e0!3m2!1sen!2sbg!4v1508527764091" width="1170" height="340" frameborder="0" style="border:0" allowfullscreen></iframe> #}
+                </div>
+            </div>     
+        </div>
+    </div>
+{% endblock %}
+
+{% block footerJS %}
+    {{ parent() }}
+    <script type="text/javascript">
+        {#
+        $(function() {
+            var $form = $('form[name="contacts"]');
+            var formValidator = $form.formValidator({
+                validCallback: function(el, isValid) {
+                    if (isValid) {
+                        if ($(el).hasClass('g-recaptcha-response')) {
+                            $('#captcha_error').remove();
+                        }
+                        $(el).parent('div.field').removeClass('fieldError');
+                        $(el).parent('div.field').addClass('fieldSuccess');
+                    } else {
+                        if ($(el).hasClass('g-recaptcha-response') && !$('#captcha_error').length) {
+                            $('#captcha').append('<p id="captcha_error" class="textError">{{ 'fill_captcha'|trans({}, 'NTFrontendBundle')}}</p>');
+                        }
+                        if (!$(el).parent('div.field').hasClass('fieldError')) {
+                            $(el).parent('div.field').removeClass('fieldSuccess');
+                            $(el).parent('div.field').addClass('fieldError');
+                        }
+                    }
+                }
+            });
+        
+            $($form.prop('elements')).keyup(formValidator.validateElement);
+            $($form.prop('elements')).change(formValidator.validateElement);
+        });
+        #}
+
+        $(function(){
+            var haveToScroll ={% if app.session.flashbag.has('error') or app.session.flashbag.has('success') %}true{% else %}false{% endif %};
+            if (haveToScroll) {
+                $('html, body').stop(true, true).animate({
+                    scrollTop: $('#contact_form').offset().top
+                }, 1300);
+            };
+        });
+    </script>
+    {% if dealers is defined and dealers is not null and dealers|length %}
+        <script src="https://maps.googleapis.com/maps/api/js?key= AIzaSyCSlZghEF-ZTOZQN3zg4KyWl6J83w7qGGU"></script>
+        <script>
+            $(function() {
+                // google map
+                var $map = $('#googleMap');
+                var locations = {};
+
+                locations = {
+                    {% for dealer in dealers %}
+                        "{{loop.index}}":{"latitude":"{{dealer.latitude}}","longitude":"{{dealer.longitude}}", "pinDescription":'{% spaceless %}{{dealer.pinDescription|replace({"'":"\""})|raw}}{% endspaceless %}'}{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                };
+
+                if (countObjectlocations(locations)) {
+                    initMap($map.selector, locations);
+                } else {
+                    $map.hide();
+                }
+            });
+
+            // google map
+            function countObjectlocations (locations) {
+                var count = 0;
+                for (i in locations) {
+                    if (locations.hasOwnProperty(i)) {
+                        count++;
+                    }
+                }
+                return count > 0 ? true : false;
+            }
+
+            function initMap (mapElement, locations) {
+                // get map selector
+                mapElement = mapElement.replace('#', '');
+
+                var customStyles = [];
+                for (first in locations) {
+                    var firstIndex = first;
+                    break;
+                };
+                var mapOptions = {
+                    zoom: 17,
+                    styles: customStyles,
+                    disableDefaultUI: false,
+                    center: new google.maps.LatLng( locations[firstIndex].latitude, locations[firstIndex].longitude ),
+                    panControl: true,
+                    zoomControl: true,
+                    mapTypeControl: true,
+                    scaleControl: true,
+                    streetViewControl: true,
+                    overviewMapControl: true,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+
+                var map = new google.maps.Map(document.getElementById(mapElement), mapOptions);
+
+                var markerBounds = new google.maps.LatLngBounds();
+
+                var infowindow = new google.maps.InfoWindow();
+
+                var marker;
+                for (i in locations) {
+                    // var iconUrl = "images/mapPin.png",
+                    // iconSize = new google.maps.Size(55, 65);
+                    var markerPosition = new google.maps.LatLng(locations[i].latitude, locations[i].longitude);
+                    marker = new google.maps.Marker({
+                        position: markerPosition,
+                        map: map,
+                        animation: google.maps.Animation.DROP,
+                        // icon: {
+                        //     url: iconUrl,
+                        //     scaledSize: iconSize
+                        //     // anchor: new google.maps.Point(23, 64) // pin point position
+                        // }
+                    });
+                    markerBounds.extend(markerPosition);
+
+                    // add infoWindow to each pin
+                    if (locations[i].pinDescription) {
+                        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                            return function() {
+                                infowindow.setContent(locations[i].pinDescription);
+                                infowindow.open(map, marker);
+                            }
+                        })(marker, i));
+                    }
+                }
+                {% if dealers|length > 1 %}
+                    // change zoom for multiple pins
+                    map.fitBounds(markerBounds);
+                {% endif %}
+            }
+        </script>
+    {% endif %}
+{% endblock %}

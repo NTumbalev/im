@@ -1,0 +1,76 @@
+<footer>
+    <div class="container">
+        <div class="main-footer">
+            <div class="row">
+                <div class="col-md-3 hideOnMobile">
+                    <div class="about">
+                        <h4 class="footer-title">{{footerLeft.title}}</h4>
+                        {% if footerLeft.description is defined and footerLeft.description is not null and footerLeft.description|length %}
+                            {{ footerLeft.description|raw }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-3 hideOnMobile">
+                    <div class="shop-list">
+                        <h4 class="footer-title">{{ footerMiddle.title }}</h4>
+                        {% if footerMiddle.description is defined and footerMiddle.description is not null and footerMiddle.description|length %}
+                            {{ footerMiddle.description|raw }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-3 hideOnMobile">
+                    <h4 class="footer-title">{{ 'follow_us'|trans({}, 'NTFrontendBundle')}}</h4>
+                    <div class="social-bottom">
+                        <ul>
+                            {% if settings.get('facebook') is defined and settings.get('facebook') is not null and settings.get('facebook')|length %}
+                                <li>
+                                    <a href="{{ settings.get('facebook') }}" class="fa fa-facebook"></a>
+                                </li>
+                            {% endif %}
+
+                            {% if settings.get('twitter') is defined and settings.get('twitter') is not null and settings.get('twitter')|length %}
+                                <li>
+                                    <a href="{{ settings.get('twitter') }}" class="fa fa-twitter"></a>
+                                </li>
+                            {% endif %}
+
+                            {% if settings.get('youtube') is defined and settings.get('youtube') is not null and settings.get('youtube')|length %}
+                                <li>
+                                    <a href="{{ settings.get('youtube') }}" class="fa fa-youtube"></a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="more-info">
+                        <h4 class="footer-title">{{ footerRight.title }}</h4>
+                        {% if footerRight.description is defined and footerRight.description is not null and footerRight.description|length %}
+                            {{ footerRight.description|raw }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-footer">
+            <div class="row">
+                <div class="col-xs-6 col-md-6">
+                    <span>{{ 'all_rights_reserved'|trans({}, 'NTFrontendBundle')}} <a href="{{ path('homepage') }}">{{ 'website_name'|trans({}, 'NTFrontendBundle')}}</a></span>
+                </div>
+                <div class="col-xs-6 col-md-6 text-right">
+                    Design: <a rel="nofollow" href="http://www.kadesignbg.com" target="_parent">KaDesign</a>
+                    | Code: <a rel="nofollow" href="mailto:ntumbalev@gmail.com" target="_parent">Nikolay Tumbalev</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+{% block footerJS %}
+    <script src="/js/vendor/jquery-1.11.0.min.js"></script>
+    <script src="/js/plugins.js"></script>
+    <script src="/js/main.js"></script>
+    <script type="text/javascript" src="/js/lightbox.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+{% endblock %}

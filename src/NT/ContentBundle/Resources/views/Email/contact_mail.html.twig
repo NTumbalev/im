@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Contact Form</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style>
+		strong, a { color: #2d8aca; }
+		a:hover { text-decoration: none; }
+	</style>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif; background: #ededed; text-align: center; color: #444; font-size: 15px;">
+	<table cellpadding="20" style="background: #fff; width:600px; text-align: left; margin: 20px auto; border: 1px solid #e6e6e6; border-bottom: 2px solid #e1e1e1; border-collapse: collapse;">
+		<tr>
+			<th colspan="2" style="text-align: center; border-bottom: 1px solid #ededed;">
+				<img src="{{ app.request.getSchemeAndHttpHost() }}/images/logo.png" alt="Logo">
+			</th>
+		</tr>
+		{% if item is defined and item is not null and item|length %}
+			<tr>
+				<td style="width: 25%; border-right: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;"><strong>{{ 'contact.enquiryFor'|trans({}, "NTFrontendBundle")}}</strong></td>
+				<td style="border-bottom: 1px solid #e6e6e6;">
+					{% if path is defined and path is not null and path|length %}
+						<a href="{{ app.request.getSchemeAndHttpHost() }}{{ path }}">{{ item.title }}</a>
+					{% else %}
+						{{item.title}}
+					{% endif %}
+				</td>
+			</tr>
+		{% endif %}
+		<tr>
+			<td style="width: 25%; border-right: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;"><strong>{{ 'contact.name'|trans({}, "NTFrontendBundle")}}</strong></td>
+			<td style="border-bottom: 1px solid #e6e6e6;">{{data.name}}</td>
+		</tr>
+		
+		<tr>
+			<td style="width: 25%; border-right: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;"><strong>{{ 'contact.email'|trans({}, "NTFrontendBundle")}}</strong></td>
+			<td style="border-bottom: 1px solid #e6e6e6;">{{data.email}}</td>
+		</tr>
+
+		<tr>
+			<td style="width: 25%; border-right: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;"><strong>{{ 'contact.subject'|trans({}, "NTFrontendBundle")}}</strong></td>
+			<td style="border-bottom: 1px solid #e6e6e6;">{{data.subject}}</td>
+		</tr>
+		
+		<tr>
+			<td style="width: 25%; border-right: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;"><strong>{{ 'contact.message'|trans({}, "NTFrontendBundle")}}</strong></td>
+			<td style="border-bottom: 1px solid #e6e6e6;">{{data.message}}</td>
+		</tr>
+	</table>
+	<div style="width: 600px; text-align: center; margin: 0 auto;">
+		<p style="font-size: 13px; font-style: italic; ">
+			{{'message_generated_from'|trans({}, 'NTFrontendBundle')}} <a href="{{ app.request.getSchemeAndHttpHost() }}">{{ app.request.getSchemeAndHttpHost() }}</a>.
+		</p>
+		<p style="font-size: 13px; font-style: italic; ">
+			<a href="mailto:ntumbalev@gmail.com?Subject=Запитване за сайт" target="blank">{{'developed_by'|trans({}, 'NTFrontendBundle')}} Nikolay Tumbalev</a>
+		</p>
+	</div>
+</body>
+</html>

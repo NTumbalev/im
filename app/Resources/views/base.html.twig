@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<html {{ sonata_seo_html_attributes() }}>
+    <head {{ sonata_seo_head_attributes() }}>
+        {{ sonata_seo_title() }}
+        {{ sonata_seo_metadatas() }}
+        {{ sonata_seo_link_canonical() }}
+        {{ sonata_seo_lang_alternates() }}
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        
+        <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="/css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="/css/misc.css">
+        <link rel="stylesheet" type="text/css" href="/css/flexslider.css">
+        <link rel="stylesheet" type="text/css" href="/css/lightbox.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+
+        <script src="/js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+        
+        {% block stylesheets %}
+            {# {% stylesheets 'assets/css/*' filter='?uglifycss, cssrewrite' output='generatedCss/*.css' %}
+                <link rel="stylesheet"  type="text/css" href="{{ asset_url }}">
+            {% endstylesheets %} #}
+        {% endblock %}
+
+        {% block javascripts %}
+            {# {% javascripts 'assets/js/*' filter='?uglifyjs2' output='generatedJs/*.js' %}
+                <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %} #}
+        {% endblock %}
+
+        {{ render(controller('NTSettingsBundle:Settings:render', {'key':'header_miscellanous'})) }}
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+        <![endif]-->
+        {{ render(controller('NTFrontendBundle:Frontend:renderHeader', { 'locale': app.request.locale, 'route': app.request.attributes.get('_route'), 'route_params': app.request.attributes.get('_route_params') })) }}
+        
+        {% block main %}{% endblock %}
+        {{ render(controller('NTFrontendBundle:Frontend:renderFooter')) }}
+        {{ render(controller('NTSettingsBundle:Settings:render', {'key':'footer_miscellanous'})) }}
+        {{ render(controller('NTSettingsBundle:Settings:render', {'key':'ga_code'})) }}
+
+        {% block footerJS %}
+        {% endblock %} 
+    </body>
+</html>

@@ -1,0 +1,103 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="nt_translations.translator.class">NT\TranslationsBundle\Translation\Translator</parameter>
+        <parameter key="nt_translations.loader.database.class">NT\TranslationsBundle\Translation\Loader\DatabaseLoader</parameter>
+        
+        <parameter key="nt_translations.trans_unit.manager.class">NT\TranslationsBundle\Manager\TransUnitManager</parameter>
+        <parameter key="nt_translations.file.manager.class">NT\TranslationsBundle\Manager\FileManager</parameter>
+
+        <parameter key="nt_translations.importer.file.class">NT\TranslationsBundle\Translation\Importer\FileImporter</parameter>
+
+        <parameter key="nt_translations.exporter_collector.class">NT\TranslationsBundle\Translation\Exporter\ExporterCollector</parameter>
+        <parameter key="nt_translations.exporter.xliff.class">NT\TranslationsBundle\Translation\Exporter\XliffExporter</parameter>
+        <parameter key="nt_translations.exporter.yml.class">NT\TranslationsBundle\Translation\Exporter\YamlExporter</parameter>
+        <parameter key="nt_translations.exporter.php.class">NT\TranslationsBundle\Translation\Exporter\PhpExporter</parameter>
+
+        <parameter key="nt_translations.orm.storage.class">NT\TranslationsBundle\Storage\DoctrineORMStorage</parameter>
+        <parameter key="nt_translations.orm.trans_unit.class">NT\TranslationsBundle\Entity\TransUnit</parameter>
+        <parameter key="nt_translations.orm.translation.class">NT\TranslationsBundle\Entity\Translation</parameter>
+        <parameter key="nt_translations.orm.file.class">NT\TranslationsBundle\Entity\File</parameter>
+
+        <parameter key="nt_translations.listener.get_database_resources.class">NT\TranslationsBundle\Translation\GetDatabaseResourcesListener</parameter>
+    </parameters>
+
+    <services>
+
+        <!-- Storage -->
+        
+        <service id="nt_translations.translation_storage" class="%nt_translations.orm.storage.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="collection">
+                <argument key="trans_unit">%nt_translations.orm.trans_unit.class%</argument>
+                <argument key="translation">%nt_translations.orm.translation.class%</argument>
+                <argument key="file">%nt_translations.orm.file.class%</argument>
+            </argument>
+        </service>
+
+        <!-- Translator -->
+        <service id="nt_translations.translator" class="%nt_translations.translator.class%">
+            <argument type="service" id="service_container" />
+            <argument type="service" id="translator.selector" />
+            <argument type="collection" /> <!-- translation loaders -->
+            <argument type="collection">
+                <argument key="cache_dir">%kernel.cache_dir%/translations</argument>
+                <argument key="debug">%kernel.debug%</argument>
+            </argument>
+            <argument type="service" id="session" on-invalid="ignore" />
+        </service>
+
+        <!-- Managers -->
+        <service id="nt_translations.trans_unit.manager" class="%nt_translations.trans_unit.manager.class%">
+            <argument type="service" id="nt_translations.translation_storage" />
+            <argument type="service" id="nt_translations.file.manager" />
+            <argument>%kernel.root_dir%</argument>
+        </service>
+
+        <service id="nt_translations.file.manager" class="%nt_translations.file.manager.class%">
+            <argument type="service" id="nt_translations.translation_storage" />
+            <argument>%kernel.root_dir%</argument>
+        </service>
+
+        <!-- Loader -->
+        <service id="nt_translations.loader.database" class="%nt_translations.loader.database.class%">
+            <argument type="service" id="nt_translations.translation_storage" />
+            <tag name="translation.loader" alias="database" />
+        </service>
+
+        <!-- Importer -->
+        <service id="nt_translations.importer.file" class="%nt_translations.importer.file.class%">
+            <argument type="collection" /> <!-- translation loaders -->
+            <argument type="service" id="nt_translations.translation_storage" />
+            <argument type="service" id="nt_translations.trans_unit.manager" />
+            <argument type="service" id="nt_translations.file.manager" />
+        </service>
+
+        <!-- Exporter -->
+        <service id="nt_translations.exporter_collector" class="%nt_translations.exporter_collector.class%" />
+
+        <service id="nt_translations.exporter.xliff" class="%nt_translations.exporter.xliff.class%">
+            <tag name="nt_translations.exporter" alias="xlf" />
+        </service>
+
+        <service id="nt_translations.exporter.yml" class="%nt_translations.exporter.yml.class%">
+            <argument>%nt_translations.use_yml_tree%</argument>
+            <tag name="nt_translations.exporter" alias="yml" />
+        </service>
+
+        <service id="nt_translations.exporter.php" class="%nt_translations.exporter.php.class%">
+            <tag name="nt_translations.exporter" alias="php" />
+        </service>
+
+        <!-- Listener -->
+        <service id="nt_translations.listener.get_database_resources" class="%nt_translations.listener.get_database_resources.class%">
+            <argument type="service" id="nt_translations.translation_storage" />
+            <tag name="kernel.event_listener" event="nt_translations.event.get_database_resources" method="onGetDatabaseResources"  />
+        </service>
+
+    </services>
+</container>

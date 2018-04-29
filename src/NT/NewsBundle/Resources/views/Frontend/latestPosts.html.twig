@@ -1,0 +1,28 @@
+<div class="col-md-3 col-md-offset-1">
+    <div class="side-bar">
+        <div class="recent-post">
+            <h4>{{ 'latest_news'|trans({}, 'NTFrontendBundle')}}</h4>
+            <div class="posts">
+                {% for item in posts %}
+                    <div class="recent-post">
+                        {% if item.translations[app.request.locale].image is defined and item.translations[app.request.locale].image is not null and item.translations[app.request.locale].image|length %}
+                            <div class="recent-post-thumb">
+                                {% thumbnail item.translations[app.request.locale].image, 'thumb' with {'title':item.translations[app.request.locale].title, 'alt':item.translations[app.request.locale].title} %}
+                            </div>
+                        {% endif %}
+                        <div class="recent-post-info">
+                            <h6>
+                                <a href="{{ path('post_without_category', item.routeParams()) }}">
+                                    {{ item.title }}
+                                </a>
+                            </h6>
+                            <span>
+                                {{item.publishedDate|localizeddate('full', 'none', null, null, 'dd MMM YYYY')}}
+                            </span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div> 
+        </div>    
+    </div>
+</div>

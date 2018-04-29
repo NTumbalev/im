@@ -1,0 +1,24 @@
+parameters:
+    nt.accents.admin.accents.class: NT\AccentsBundle\Admin\AccentsAdmin
+    nt.accents.admin.accents.controller: NTCoreBundle:SortableCRUD
+    nt.accents.admin.accents.translation: NTAccentsBundle
+
+
+services:
+    nt.accents.admin.accents:
+        class: %nt.accents.admin.accents.class%
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "nt_site", label: "nt_accents" }
+        arguments:
+            - ~
+            - %nt.accents.admin.accents.entity%
+            - %nt.accents.admin.accents.controller%
+        calls:
+            - [ setTranslationDomain, [%nt.accents.admin.accents.translation%]]
+            - [ setTemplates, [outer_list_rows_mosaic: NTCoreBundle:Admin:list_outer_rows_mosaic.html.twig]]
+
+    nt.accents.admin.accents_translation:
+        class: NT\AccentsBundle\Admin\AccentTranslationsAdmin
+        arguments: [~, NT\AccentsBundle\Entity\AccentTranslation, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, show_in_dashboard: false}

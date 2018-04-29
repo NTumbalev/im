@@ -1,0 +1,27 @@
+{% extends '::base.html.twig' %}
+
+{% block main %}
+    {% set haveSidebar = false %}
+    {% if sideBar is defined and sideBar is not null and sideBar|length %}
+        {% set haveSidebar = true %}
+    {% endif %}
+
+    {% include '::breadCrumbs.html.twig' with {'breadCrumbs':breadCrumbs, 'content': content} %}
+
+    <div id="timeline-post">
+        <div class="container">
+            <div class="row">
+                {% if haveSidebar %}
+                <div class="col-md-2">
+                    {{ sideBar|raw }}
+                </div>
+                {% endif %}
+                <div class="col-md-{% if haveSidebar %}10{% else %}12{% endif %}">
+                    {% if content.description is defined and content.description is not null and content.description|length %}
+                        {{ content.description|raw }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

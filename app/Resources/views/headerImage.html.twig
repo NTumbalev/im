@@ -1,0 +1,11 @@
+<div class="site-showcase">
+    <div class="parallax page-header"{% if content.translations[app.request.locale].headerImage is defined and content.translations[app.request.locale].headerImage is not null and content.translations[app.request.locale].headerImage|length %} style="background-image:url({% path content.translations[app.request.locale].headerImage, 'reference' %});"{% endif %}>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>{{content.title}}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

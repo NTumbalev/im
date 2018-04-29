@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% import "::paginatorWithRouteAndSlug.html.twig" as pager %}
+
+{% block main %}
+    {% include '::breadCrumbs.html.twig' with {'breadCrumbs':breadCrumbs, 'content': content} %}
+
+    <div id="products-post">
+        <div class="container">
+            <div class="row" id="Container">
+                {% for project in projects %}
+                    <div class="col-md-3 col-sm-6 mix portfolio-item"> 
+                        <div class="portfolio-wrapper">                
+                            <div class="portfolio-thumb">
+                                {% thumbnail project.image, 'index' %}
+                            </div>  
+                            <div class="label-text">
+                                <h3>
+                                    <a href="{{ path(project.route, project.routeParams) }}">
+                                        {{ project.title }}
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>          
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if projects is defined and projects|length %}
+                <div class="pagination">
+                    <div class="row">   
+                        <div class="col-md-12">
+                            {{ pager.pager(projects, "projects_listing") }}
+                            {# <ul>
+                                <li class="selected"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">Следваща</a></li>
+                            </ul> #}
+                        </div>
+                    </div>
+                </div>     
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

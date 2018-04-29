@@ -1,0 +1,36 @@
+{% if posts is defined and posts is not null and posts|length %}
+    <div id="testimonails">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-section">
+                        <h2>{{ 'news_homepage'|trans({}, 'NTFrontendBundle')}}</h2>
+                        <div class="orangeLine"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="testimonails-slider">
+                      <ul class="slides">
+                        {% for item in posts %}
+                            <li>
+                                <div class="testimonails-content">
+                                    {% if item.simpleDescription is defined and item.simpleDescription is not null and item.simpleDescription|length %}
+                                        {{ item.simpleDescription }}
+                                    {% endif %}
+                                    <h6>
+                                        <a href="{{ path('post_without_category', item.routeParams) }}">
+                                            {{ 'read_more'|trans({}, 'NTFrontendBundle')}}
+                                        </a>
+                                    </h6>
+                                </div>
+                            </li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

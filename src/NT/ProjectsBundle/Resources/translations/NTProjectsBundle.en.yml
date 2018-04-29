@@ -1,0 +1,23 @@
+Аccent List: 'Projects List'
+Аccent Delete: 'Projects Delete'
+
+nt_projects: 'Projects'
+form:
+  created_at: 'Created at'
+  description: 'Description'
+  id: 'ID'
+  image: 'Image'
+  is_hidden: 'Hidden?'
+  general: 'General'
+  label_image: 'Image'
+  more: 'More'
+  title: 'Title'
+  translations: 'Translations'
+
+tab:
+  general: 'General'
+  more: 'More'
+
+table.label_actions: 'Actions'
+
+Publish Workflow: 'Publish Workflow'

@@ -1,0 +1,47 @@
+services:
+  nt_core.form.type.nt_tree:
+      class: NT\CoreBundle\Form\Type\TreeType
+      arguments: [ "@property_accessor" ]
+      tags:
+          - { name: form.type, alias: nt_tree }
+
+  nt_core.form.type_guesser.tree:
+    class: NT\CoreBundle\Form\Type\TreeTypeGuesser
+    arguments: [ "@doctrine" ]
+    tags:
+      - { name: form.type_guesser }
+  nt.core.route.entity:
+    class: NT\CoreBundle\Route\EntityRouterBuilder
+    arguments: ["@sonata.admin.audit.manager"]
+
+
+  nt_core.form.type_guesser.tree:
+      class: NT\CoreBundle\Form\Type\TreeTypeGuesser
+      arguments: [ "@doctrine" ]
+      tags:
+          - { name: form.type_guesser }
+
+  nt.og_tags:
+      class: NT\CoreBundle\Services\OgTagsService
+      arguments: [ "@service_container", '@request_stack' ]
+      tags:
+          - { name: nt.og_tags }
+
+  sonata.media.resizer.custom:
+      class: NT\CoreBundle\Resizer\CustomResizer
+      arguments: [@sonata.media.adapter.image.gd, 'outbound', @sonata.media.metadata.proxy, @service_container]
+
+  nt_soft_delete.event.listener.delete:
+        class: NT\CoreBundle\EventListener\SoftDeletableListener
+        tags:
+            - { name: doctrine.event_listener, event: preSoftDelete}
+            - { name: doctrine.event_listener, event: postSoftDelete}
+        arguments:
+            - @service_container
+
+  nt.twig.extensions:
+    class: NT\CoreBundle\Twig\Extension\NTTwigExtensions
+    calls:
+      - [ setContainer,[ @service_container ] ]
+    tags:
+      - { name: twig.extension }

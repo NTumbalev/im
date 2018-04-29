@@ -1,0 +1,36 @@
+Slider List: 'Слайдър'
+Slider Delete: 'Изтрий'
+General: 'Основни'
+
+Publish Workflow: 'Видимост в сайта'
+nt_slider: "Слайдър"
+form:
+    title: "Заглавие"
+    alt: "Алтернативен текст"
+    image: "Изображение"
+    is_hidden: "Скрит"
+    translations: "Преводи"
+    image: "Изображение"
+    createdAt: "Дата на създаване"
+    actions: "Действия"
+    id: "Уникален номер"
+    target: 'Отвори:'
+    rank: 'Ранк'
+    url: 'URL адрес'
+    buttonTitle: 'Заглавие на линк'
+    description: 'Описание'
+Binary content: "Файл"
+Unlink: "Изтрий"
+
+td_revision: 'Ревизия'
+td_timestamp: 'Дата'
+td_username: 'Администратор'
+td_action: 'Действия'
+label_view_revision: 'Виж ревизията'
+action_edit: 'Виж'
+action_history: 'Версии'
+
+label_revert_to_revision: 'Върни се до тази ревизия'
+
+not_found_revisions: 'Няма намерени ревизии'
+test: '123'

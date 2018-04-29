@@ -1,0 +1,14 @@
+services:
+    nt.admin.dealers:
+        class: NT\DealersBundle\Admin\DealersAdmin
+        arguments: [~, NT\DealersBundle\Entity\Dealer, NTCoreBundle:HistoryCRUD]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: "nt_site", label: "nt_dealers", audit: true}
+        calls:
+            - [ setTranslationDomain, [NTDealersBundle]]
+
+    nt.admin.dealers.translation:
+        class: NT\DealersBundle\Admin\DealersTranslationsAdmin
+        arguments: [~, NT\DealersBundle\Entity\DealerTranslation, ~]
+        tags:
+            - {name: sonata.admin, manager_type: orm, show_in_dashboard: false}

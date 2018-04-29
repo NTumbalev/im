@@ -1,0 +1,30 @@
+# NT/TranslationsBundle/Resources/config/admin.yml
+
+parameters:
+    nt.translations.admin.translations.class: NT\TranslationsBundle\Admin\TranslationsAdmin
+    nt.translations.admin.translations.unit.class: NT\TranslationsBundle\Admin\TransUnitAdmin
+    nt.translations.admin.translations.controller: NTTranslationsBundle:Admin
+    nt.translations.admin.translations.translation: NTTranslationsBundle
+
+services:
+    nt.translations.admin.translations:
+        class: %nt.translations.admin.translations.class%
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "nt_settings", label: "nt_translations" }
+        arguments:
+            - ~
+            - NT\TranslationsBundle\Entity\Translation
+            - %nt.translations.admin.translations.controller%
+        calls:
+            - [ setTranslationDomain, [%nt.translations.admin.translations.translation%]]
+
+    nt.translations.admin.translations.unit:
+        class: %nt.translations.admin.translations.unit.class%
+        tags:
+            - { name: sonata.admin, manager_type: orm, show_in_dashboard: false }
+        arguments:
+            - ~
+            - NT\TranslationsBundle\Entity\TransUnit
+            - ~
+        calls:
+            - [ setTranslationDomain, [%nt.translations.admin.translations.translation%]]

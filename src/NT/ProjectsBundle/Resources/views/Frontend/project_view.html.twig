@@ -1,0 +1,35 @@
+{% extends '::base.html.twig' %}
+
+{% block main %}
+    {% include '::breadCrumbs.html.twig' with {'breadCrumbs':breadCrumbs, 'content': content} %}
+
+    <div id="timeline-post">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    {{ sideBar|raw }}
+                </div>
+                <div class="col-md-10">
+                    {% if project.description is defined and project.description is not null and project.description|length %}
+                        {{ project.description|raw }}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="gallery">
+                        {% if project.gallery is defined and project.gallery is not null and project.gallery|length %}
+                            {% for item in project.gallery.galleryHasMedias %}
+                                <div class="image">
+                                    <a href="{% path item.media, 'reference' %}" data-lightbox="example-set" data-title="{{ item.media.title }}">
+                                        {% thumbnail item.media, 'thumb' %}
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

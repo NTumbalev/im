@@ -1,0 +1,5 @@
+services:
+    nt_publish_workflow.type:
+        class: NT\PublishWorkflowBundle\Form\Type\PublishWorkflowType
+        tags:
+            - { name: form.type, alias: nt_publish_workflow }
